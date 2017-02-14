@@ -11,7 +11,7 @@ def report_results(result, errors)
 end
 
 File.open(TEMP_FILE, 'w') do |f|
-  f.write(ARGV.first)
+  f.write(ARGV.first.gsub("\n",''))
 end
 
 results = `statelint #{TEMP_FILE}`
