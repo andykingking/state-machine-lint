@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+TEMP_FILE = 'state-machine.json'.freeze
+
+def report_results(result, errors)
+	base_output = { 'valid' => result }
+	base_output['output'] = errors if errors.length > 0
+	STDOUT.write(base_output.to_json)
+end
+
+File.open(TEMP_FILE, 'w') do |f|
+  f.write(ARGV.first)
+end
+
+results = `statelint #{TEMP_FILE}`
+report_results(results.length == 0, results)
